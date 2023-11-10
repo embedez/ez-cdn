@@ -1,4 +1,7 @@
-on: [release]
+on: 
+  push:
+    branches:
+      - main
 jobs:
   build_and_push_to_registry:
     name: Docker Build and Push
