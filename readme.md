@@ -38,7 +38,9 @@ export const UploadImage = async (base64image: string, settings: {
       } satisfies AxiosRequestConfig;
 
     return axios.request(config);
-}```
+}
+```
+
 > returns `{"id": "sdfghgsdfhsdjfgj-gdfshg"}`
 
 example view
