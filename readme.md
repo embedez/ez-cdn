@@ -9,3 +9,33 @@ minio_accessKey=""
 minio_secretKey=""
 minio_bucket=""
 ```
+
+example upload
+```ts
+import axios, { type AxiosRequestConfig } from "axios";
+import FormData from "form-data";
+
+export const UploadImage = async (base64image: string, settings: {
+    filename: string,
+    contentType: string
+}) => {
+    let data = new FormData();
+
+    const binaryImage = Buffer.from(base64image, 'base64');
+    data.append('file', binaryImage, settings);
+    data.append('contentType', 'image/png');
+
+
+    let config = {
+        method: 'POST',
+        maxBodyLength: Infinity,
+        url: 'http://localhost:3000/upload',
+        headers: { 
+          ...data.getHeaders()
+        },
+        data : data,
+        validateStatus: () => true
+      } satisfies AxiosRequestConfig;
+
+    return axios.request(config);
+}```
