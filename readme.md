@@ -39,3 +39,7 @@ export const UploadImage = async (base64image: string, settings: {
 
     return axios.request(config);
 }```
+> returns `{"id": "sdfghgsdfhsdjfgj-gdfshg"}`
+
+example view
+http://localhost:3000/view?id=sdfghgsdfhsdjfgj-gdfshg
