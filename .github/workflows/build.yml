@@ -1,0 +1,44 @@
+on: [release]
+jobs:
+  build_and_push_to_registry:
+    name: Docker Build and Push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+      - name: Extract branch name
+        shell: bash
+        run: |
+          echo "BRANCH_NAME=$(echo ${GITHUB_REF##*/})" >> $GITHUB_ENV
+          echo "Working On ${{ env.BRANCH_NAME }}"
+
+      - name: Install nixpacks
+        run: |
+          curl -sSL https://nixpacks.com/install.sh | bash
+
+      - name: Build with nixpacks
+        run: |
+          nixpacks build . --name ez-cdn
+
+      - name: Save Docker image
+        run: |
+          mkdir /tmp/docker-images
+          docker save ez-cdn:latest > /tmp/docker-images/ez-cdn.tar
+
+      - name: Load Docker image
+        run: |
+          docker load -i /tmp/docker-images/ez-cdn.tar
+          docker tag ez-cdn ghcr.io/${{ github.repository }}/ez-cdn:${{ env.BRANCH_NAME }}
+
+
+      - name: Docker push
+        run: |
+          docker push ghcr.io/${{ github.repository }}/ez-cdn:${{ env.BRANCH_NAME }}
