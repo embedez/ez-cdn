@@ -1,5 +1,8 @@
 Simple cdn that uses minio as its core
 
+TODO:
+  Add keys
+
 template env
 ```env
 minio_endpoint=""
