@@ -1,6 +1,5 @@
 import { uploadData } from "../database/minio"
 import { nanoid } from 'nanoid'
-import * as fs from "fs"
 
 export const upload =  async (req: Request) => {
     const formData = await req.formData()
