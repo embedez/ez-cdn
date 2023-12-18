@@ -1,23 +1,33 @@
 import { uploadData } from "../database/minio"
 import { nanoid } from 'nanoid'
+import extractBearer from "../utils/extractBearer";
+import isKey from "../utils/isKey";
 
 export const upload =  async (req: Request) => {
+    if (req.method !== 'POST') return Response.json({success: false, message: 'please post'}, {status: 405})
+
     const formData = await req.formData()
 
-    if (!formData.get('file')) return new Response(JSON.stringify({success: false}), {status: 404})
+    const auth = req.headers.get('Authorization')
+    if (!auth) return Response.json({success: false, message: 'no auth'}, {status: 403})
 
-    const file = formData.get('file')
-    const contentType = formData.get('contentType')
+    const token = extractBearer(auth)
+    if (!isKey(token)) return Response.json({success: false, message: `${token} is not a key`}, {status: 403})
+
+
+    const file = formData.get('file') as File
+    if (!file) return Response.json({success: false, message: "no file provider in Form body"}, {status: 404})
+
+    const contentType = formData.get('contentType') as undefined | string
 
     const id = nanoid()
-
     const fileData = await (new Blob([file])).arrayBuffer()
 
     const data = await uploadData(Buffer.from(fileData), id, {
-        'Content-Type': contentType || 'text/plain; charset=us-ascii'
+        'Content-Type': contentType || file.type || 'text/plain; charset=us-ascii'
     })
 
-    return new Response(JSON.stringify({
+    return Response.json({
         id: id 
-    }))
+    })
 }

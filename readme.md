@@ -1,9 +1,9 @@
-Simple cdn that uses minio as its core
+# Simple cdn that uses minio as its core
 
 TODO:
-  Add keys
+  Add cors
 
-template env
+## template env
 ```env
 minio_endpoint=""
 minio_port=""
@@ -11,36 +11,43 @@ minio_useSSL="false"
 minio_accessKey=""
 minio_secretKey=""
 minio_bucket=""
+
+keys=ezkeyname123
 ```
 
-example upload
+## example upload
+
 ```ts
-import axios, { type AxiosRequestConfig } from "axios";
+import axios, {type AxiosRequestConfig} from "axios";
 import FormData from "form-data";
 
-export const UploadImage = async (base64image: string, settings: {
-    filename: string,
-    contentType: string
+export const UploadImage = async (base64File: string, settings: {
+  filename: string,
+  contentType: string
 }) => {
-    let data = new FormData();
+  let data = new FormData();
 
-    const binaryImage = Buffer.from(base64image, 'base64');
-    data.append('file', binaryImage, settings);
-    data.append('contentType', 'image/png');
+  const binaryFile = Buffer.from(base64File, 'base64');
+  data.append('file', binaryFile, settings);
+
+  // OPTIONAL override
+  // data.append('contentType', 'image/png');
 
 
-    let config = {
-        method: 'POST',
-        maxBodyLength: Infinity,
-        url: 'http://localhost:3000/upload',
-        headers: { 
-          ...data.getHeaders()
-        },
-        data : data,
-        validateStatus: () => true
-      } satisfies AxiosRequestConfig;
+  const key = "ezkeyname123"
+  let config = {
+    method: 'POST',
+    maxBodyLength: Infinity,
+    url: 'http://localhost:3000/upload',
+    headers: {
+      'Authorization': `Bearer ${key}`,
+      ...data.getHeaders()
+    },
+    data: data,
+    validateStatus: () => true
+  } satisfies AxiosRequestConfig;
 
-    return axios.request(config);
+  return axios.request(config);
 }
 ```
 

@@ -1,6 +1,7 @@
 import { Client, ClientOptions, ItemBucketMetadata } from 'minio'
 import axios from 'axios';
 import * as path from "path";
+import {Readable as ReadableStream} from "stream";
 
 let minioClient: Client | null = null;
 let minioBucket: string = process.env.minio_bucket || 'embedez';
@@ -112,7 +113,11 @@ const getFile = async (filename: string) => {
     if (!status.connected) await connect();
     if (Array.isArray(filename)) filename = path.join(...filename);
     const client = getClient();
-    return client.getObject(minioBucket, filename);
+    /*if (callback)
+        return client.getObject(minioBucket, filename, callback);
+    else*/
+        return client.getObject(minioBucket, filename);
+
 }
 
 const exists = async (filename: string) => {
