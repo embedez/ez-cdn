@@ -25,7 +25,7 @@ jobs:
 
       - name: Install nixpacks
         run: |
-          curl -sSL https://nixpacks.com/install.sh | bash
+          curl -sSL https://nixpacks.com/install.sh --apt ffmpeg | bash
 
       - name: Build with nixpacks
         run: |
