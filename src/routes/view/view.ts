@@ -1,23 +1,39 @@
 import { Readable } from "stream";
-import { exists, getFile, uploadData } from "../database/minio";
+import { exists, getFile, uploadData } from "../../database/minio";
 import * as fs from "fs";
+import {imageView} from "./handlers/imageView";
+import {videoView} from "./handlers/videoView";
+import {dataView} from "./handlers/dataView";
 
 export const view = async (req: Request) => {
   const url = new URL(req.url);
   const id = url.searchParams.get('id');
+  const type = url.searchParams.get('type')
 
   console.log('View: ', id)
 
   if (!id) return new Response(JSON.stringify({ success: false, message: "no ?id" }), { status: 404 });
 
-  const dataExists = await exists(id);
-  if (!dataExists) return new Response(JSON.stringify({ success: false, message: "no file found with this id" }), { status: 404 });
-
   // Create a writable stream to handle the response
-  const data = await getFile(id);
+  let data: any;
+  const contentType = type || req.headers.get('Sec-Fetch-Dest') || req.headers.get('Accept') || req.headers.get("content-type");
+
+  if ( contentType?.includes('image') ) {
+    data = await imageView(id);
+  } else if ( contentType?.includes('video') ) {
+    data = await videoView(id);
+  } else {
+    const dataPromise = [exists(id + '/image'), exists(id + '/video')]
+    const [isImage, isVideo] = await Promise.all(dataPromise)
+
+    if (isVideo && !data) data = await videoView(id)
+    if (isImage && !data) data = await imageView(id)
+    if (!data) data = await dataView(id)
+  }
+
   const readableStream = new ReadableStream({
     async start(controller) {
-      data.on('data', (chunk) => {
+      data.on('data', (chunk: any) => {
         controller.enqueue(chunk);
       });
 
@@ -25,7 +41,7 @@ export const view = async (req: Request) => {
         controller.close();
       });
 
-      data.on('error', (err) => {
+      data.on('error', (err: any) => {
         controller.error(err);
       });
     },

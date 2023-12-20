@@ -1,5 +1,7 @@
 {
     "compilerOptions": {
-        "types": ["bun-types"] // this is necessary
+        "types": ["bun-types"],
+      // this is necessary
+      "allowSyntheticDefaultImports": true
     }
 }

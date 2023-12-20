@@ -98,8 +98,13 @@ const uploadData = async (data: Buffer | string, filename: string | string[], me
                 0,
                 metadata,
                 (err, etag) => {
-                    if (err) reject(err);
-                    else resolve(etag);
+                    if (err) {
+                        console.log(err)
+                        reject(err);
+                    } else {
+                        console.log('uploaded: ', filename)
+                        resolve(etag);
+                    }
                 }
             )
         });
@@ -127,6 +132,29 @@ const exists = async (filename: string) => {
     return client.statObject(minioBucket, filename).catch(e => false)
 }
 
+const getAllObjectNames = async (): Promise<string[]> => {
+    if (!status.connected) await connect();
+    const client = getClient();
+
+    return new Promise((resolve, reject) => {
+        const objects: string[] = [];
+
+        const objectStream = client.listObjects(minioBucket, '', true);
+
+        objectStream.on('data', (obj: any) => {
+            objects.push(obj.name);
+        });
+
+        objectStream.on('end', () => {
+            resolve(objects);
+        });
+
+        objectStream.on('error', (error) => {
+            reject(error);
+        });
+    });
+};
+
 export {
     connect,
     getClient,
@@ -134,5 +162,6 @@ export {
     exists,
     uploadFileFromUrl,
     uploadFile,
-    uploadData
+    uploadData,
+    getAllObjectNames
 };

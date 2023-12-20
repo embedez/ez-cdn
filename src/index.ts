@@ -1,6 +1,7 @@
-import { upload } from "./routes/upload";
+import { upload } from "./routes/upload/upload";
 import { connect } from "./database/minio";
-import { view } from "./routes/view";
+import { view } from "./routes/view/view";
+import { hash } from "./routes/view/hash";
 connect()
 
 const server = Bun.serve({
@@ -10,6 +11,7 @@ const server = Bun.serve({
 
     if (url.pathname == "/upload") return upload(request)
     if (url.pathname == "/view") return view(request)
+    if (url.pathname == "/view/hash") return hash(request)
   
     return Response.json({hello: "world"});
   },
