@@ -118,11 +118,10 @@ const getFile = async (filename: string) => {
     if (!status.connected) await connect();
     if (Array.isArray(filename)) filename = path.join(...filename);
     const client = getClient();
-    /*if (callback)
-        return client.getObject(minioBucket, filename, callback);
-    else*/
-        return client.getObject(minioBucket, filename);
 
+    const stream = client.getObject(minioBucket, filename);
+
+    return stream;
 }
 
 const exists = async (filename: string) => {

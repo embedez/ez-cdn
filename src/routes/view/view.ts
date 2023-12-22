@@ -21,12 +21,16 @@ export const view = async (req: Request) => {
   if ( contentType?.includes('image') ) {
     data = await imageView(id);
   } else if ( contentType?.includes('video') ) {
-    data = await videoView(id);
+    data = await videoView(id, req);
+    return new Response(data.content, data.options);
   } else {
     const dataPromise = [exists(id + '/image'), exists(id + '/video')]
     const [isImage, isVideo] = await Promise.all(dataPromise)
 
-    if (isVideo && !data) data = await videoView(id)
+    if (isVideo && !data) {
+      data = await videoView(id, req)
+      return new Response(data.content, data.options);
+    }
     if (isImage && !data) data = await imageView(id)
     if (!data) data = await dataView(id)
   }

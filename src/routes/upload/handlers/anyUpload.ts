@@ -10,7 +10,7 @@ export async function anyUpload(formData: FormData, req: Request, context: AnyUp
     const file = formData.get('file') as File
     const fileData = await file.arrayBuffer();
 
-    const [data] = await uploadData(Buffer.from(fileData), id + '/data', {
+    const data = await uploadData(Buffer.from(fileData), id + '/data', {
         'content-type': context.contentType,
     })
 
