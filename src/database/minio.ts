@@ -1,7 +1,6 @@
-import { Client, ClientOptions, ItemBucketMetadata } from 'minio'
+import {BucketItemStat, Client, ClientOptions, ItemBucketMetadata} from 'minio'
 import axios from 'axios';
 import * as path from "path";
-import {Readable as ReadableStream} from "stream";
 
 let minioClient: Client | null = null;
 let minioBucket: string = process.env.minio_bucket || 'embedez';
@@ -154,13 +153,29 @@ const getAllObjectNames = async (): Promise<string[]> => {
     });
 };
 
+const getFileInfo = async (filename: string): Promise<BucketItemStat> => {
+    if (!status.connected) await connect();
+    if (Array.isArray(filename)) filename = path.join(...filename);
+    const client = getClient();
+    return client.statObject(minioBucket, filename);
+}
+
+const deleteObject = async (filename: string): Promise<void> => {
+    if (!status.connected) await connect();
+    if (Array.isArray(filename)) filename = path.join(...filename);
+    const client = getClient();
+    return client.removeObject(minioBucket, filename);
+}
+
 export {
     connect,
     getClient,
     getFile,
+    getFileInfo,
     exists,
     uploadFileFromUrl,
     uploadFile,
     uploadData,
-    getAllObjectNames
+    getAllObjectNames,
+    deleteObject,
 };
