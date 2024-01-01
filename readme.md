@@ -55,3 +55,40 @@ export const UploadImage = async (base64File: string, settings: {
 
 example view
 http://localhost:3000/view?id=sdfghgsdfhsdjfgj-gdfshg
+
+## Advanced Upload
+
+
+> #### File upload
+> takes a video file and audio file to combine them and return the id
+> ```bash
+> curl --request POST \
+> --url 'http://localhost:3000/advanced/upload?type=multi-track-fast' \
+> --header 'Authorization: Bearer {{keys}}' \
+> --header 'Content-Type: multipart/form-data' \
+> --form 'video=@C:\temp\video.mp4' \
+> --form 'audio=@C:\temp\audio.mp3'
+> ```
+
+
+> #### Image upload
+> takes a video file and audio file to combine them and return the id
+> ```bash
+> curl --request POST \
+> --url 'http://localhost:3000/advanced/upload?type=slides-fluent' \
+> --header 'Authorization: Bearer {{keys}}' \
+> --header 'Content-Type: multipart/form-data' \
+> --form 'image=@C:\temp\image.png' \
+> --form 'image=@C:\temp\image1.png' \
+> --form 'image=@C:\temp\image2.png' \
+> --form 'audio=@C:\temp\audio.mp3'
+> ```
+
+> #### ?type
+> form data video&audio:
+> - multi-track
+> - multi-track-fast
+> 
+> form data image&audio:
+> - slides
+> - slides-fluent

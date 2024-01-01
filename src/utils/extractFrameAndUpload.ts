@@ -1,9 +1,9 @@
-import { nanoid } from 'nanoid';
+import {nanoid} from 'nanoid';
 import * as fs from 'fs';
 import * as path from 'path';
 import ffmpeg from 'fluent-ffmpeg';
 
-export async function extractFrameAndUpload(file: Blob): Promise<Buffer> {
+export async function extractFrameAndUpload(file: Buffer): Promise<Buffer> {
     return new Promise(async (resolve, reject) => {
         // Generate a unique, random filename
         const filename = nanoid();
@@ -17,8 +17,7 @@ export async function extractFrameAndUpload(file: Blob): Promise<Buffer> {
         };
 
         // Write the file to disk
-        const buffer = Buffer.from(await file.arrayBuffer());
-        fs.writeFile(filepath, buffer, (err) => {
+        fs.writeFile(filepath, file, (err) => {
             if (err) {
                 onCompletion();
                 reject(err);

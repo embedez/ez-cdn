@@ -1,21 +1,37 @@
 import {exists, getFile} from "../../../database/minio";
+import {type BucketItemStat} from "minio/src/internal/type";
+import * as path from "path";
+import * as fs from "fs";
 export const videoView = async (id: String, req: Request) => {
-    let idSuffix = '';
+    let idSuffix;
+    let sendLoading: boolean = false
     const dataExists = await exists(id + '/video');
     if (dataExists) {
+        if (typeof dataExists !== 'boolean' && "loading" in dataExists.metaData) {
+            sendLoading = true
+        }
         idSuffix = '/video';
     } else {
         idSuffix = '/data';
     }
-    const stream = await getFile(id + idSuffix);
-    // Get range header
-    const range = req.headers.get('range');
-    const chunks = [];
-    for await (let chunk of stream) {
-        chunks.push(chunk);
+
+
+    let video: Buffer;
+    if (sendLoading) {
+        // Read and convert the content into Buffer
+        console.log(path.resolve('./static/null1080x1920.mp4'))
+        video = fs.readFileSync(path.resolve('./static/null1080x1920.mp4'));
+    } else {
+        const stream = await getFile(id + idSuffix);
+        const chunks = [];
+        for await (let chunk of stream) {
+            chunks.push(chunk);
+        }
+        video = Buffer.concat(chunks);
     }
-    const video = Buffer.concat(chunks);
+
     const videoSize = video.length;
+    const range = req.headers.get('range');
     if (range) {
         let parts = range.replace(/bytes=/, "").split("-");
         let start = parseInt(parts[0], 10);

@@ -113,6 +113,12 @@ const uploadData = async (data: Buffer | string, filename: string | string[], me
     }
 }
 
+const replaceData = async (data: Buffer | string, filename: string | string[], metadata?: ItemBucketMetadata) => {
+    if (!status.connected) await connect();
+    await deleteObject(filename);
+    return uploadData(data, filename, metadata);
+}
+
 const getFile = async (filename: string) => {
     if (!status.connected) await connect();
     if (Array.isArray(filename)) filename = path.join(...filename);
@@ -178,4 +184,5 @@ export {
     uploadData,
     getAllObjectNames,
     deleteObject,
+    replaceData,
 };
