@@ -7,14 +7,23 @@ import * as fs from 'fs';
 import {join} from 'path';
 import axios from 'axios';
 import {videoUpload} from "../../../upload/handlers/videoUploadHandler";
+import {handleInputFile, handleInputFiles} from "../../../../utils/handleInputFile";
 
 export const longestMultiTrack =  async (req: Request) => {
     const formData = await req.formData()
 
-    const videoFile = formData.get('video') as File
     const shouldTemp = formData.get('temp')
-    const audioFiles = formData.getAll('audio') as File[]
+
+    const [videoFile, audioFiles] = await Promise.all([
+        handleInputFile(formData.get('video')),
+        handleInputFiles(formData.getAll('audio'))
+    ])
+
+
     if (!videoFile) return Response.json({success: false, message: "no file provider in Form body"}, {status: 404})
+    if (audioFiles.length === 0)
+        return Response.json({success: false, message: "No audio files provided"}, {status: 404})
+
 
     const tempFolder = './temp'
     const id = nanoid()
@@ -40,10 +49,6 @@ export const longestMultiTrack =  async (req: Request) => {
         fs.writeFileSync(audioFilePath, await audioFile.arrayBuffer())
         audioFilePaths.push(audioFilePath)
     }
-
-
-    if (audioFilePaths.length === 0)
-        return Response.json({success: false, message: "No audio files provided"}, {status: 404})
 
     let ffmpegCommand: string[] = [
       "-i", videoFilePath,

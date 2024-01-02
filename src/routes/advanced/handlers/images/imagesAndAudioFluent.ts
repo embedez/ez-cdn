@@ -4,13 +4,16 @@ import {replaceData, uploadData} from "../../../../database/minio";
 import * as fs from 'fs';
 import {join} from 'path';
 import {videoUpload} from "../../../upload/handlers/videoUploadHandler";
+import {handleInputFiles} from "../../../../utils/handleInputFile";
 
 export const imagesAndAudioFluent =  async (req: Request) => {
     const formData = await req.formData()
     const shouldTemp = formData.get('temp')
-    const imageFiles = formData.getAll('image') as File[]
-    const audioFiles = formData.getAll('audio') as File[]
-    console.log(imageFiles)
+    const [imageFiles, audioFiles] = await Promise.all([
+        handleInputFiles(formData.getAll('image')),
+        handleInputFiles(formData.getAll('audio'))
+    ])
+
     if (!imageFiles || !imageFiles[0]) return Response.json({success: false, message: "no image provided in Form body"}, {status: 404})
     const tempFolder = './temp'
     const id = nanoid()
