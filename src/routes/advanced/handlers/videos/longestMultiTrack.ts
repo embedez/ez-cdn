@@ -69,7 +69,7 @@ export const longestMultiTrack =  async (req: Request) => {
     // Map streams after all input files are specified
     //ffmpegCommand.push("-map", "0:v:0");
     for(let j = 0; j < i; j++) {
-        ffmpegCommand.push("-map", `${j+2}:a:0`);
+        ffmpegCommand.push("-map", `${j+2}:a:0?`);
     }
 
 

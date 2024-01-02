@@ -64,7 +64,7 @@ export const shortestMultiTrack =  async (req: Request) => {
         "-map",
         "[outv]", // Map the output from the 'overlay' filter to video stream
         "-map",
-        "1:a:0", // Map the audio stream from the second input file
+        "1:a?", // Map the audio stream from the second input file
         "-c:a",
         "aac", // Convert the mapped audio stream to aac
         "-crf",
