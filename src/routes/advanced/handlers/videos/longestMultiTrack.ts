@@ -1,7 +1,7 @@
 import {spawn} from "child_process";
 
 import {nanoid} from "nanoid";
-import {uploadData} from "../../../../database/minio";
+import {exists, uploadData} from "../../../../database/minio";
 import * as fs from 'fs';
 import {join} from 'path';
 import {videoUpload} from "../../../upload/handlers/videoUploadHandler";
@@ -13,7 +13,14 @@ export const longestMultiTrack = async (req: Request) => {
         const formData = await req.formData()
 
         const shouldTemp = formData.get('temp')
-        const id = nanoid()
+        const id = formData.get("id") as string | undefined || nanoid()
+
+        if (formData.get("id")) {
+            const existingFile = await exists(`${id}/video`);
+            if (existingFile) return res(Response.json({
+                id: id
+            }))
+        }
 
         if (shouldTemp) {
             const data = await uploadData(Buffer.from(JSON.stringify({
@@ -31,7 +38,6 @@ export const longestMultiTrack = async (req: Request) => {
             handleInputFile(formData.get('video')),
             handleInputFiles(formData.getAll('audio'))
         ])
-
 
 
         if (!videoFile) return Response.json({success: false, message: "no file provider in Form body"}, {status: 404})
