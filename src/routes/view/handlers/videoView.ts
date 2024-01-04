@@ -3,16 +3,28 @@ import {type BucketItemStat} from "minio/src/internal/type";
 import * as path from "path";
 import * as fs from "fs";
 export const videoView = async (id: String, req: Request) => {
+    const url = new URL(req.url)
     let idSuffix;
     let sendLoading: boolean = false
+
     const dataExists = await exists(id + '/video');
     if (dataExists) {
-        if (typeof dataExists !== 'boolean' && "loading" in dataExists.metaData) {
+        if (typeof dataExists !== 'boolean' && "loading" in dataExists.metaData && !url.searchParams.get('ignoreTemp')) {
             sendLoading = true
         }
         idSuffix = '/video';
     } else {
         idSuffix = '/data';
+        if (!await exists(id + idSuffix)) {
+            return Response.json({
+                success: false,
+                status: 404,
+                statusText: "could not find post"
+            },{
+                status: 404,
+                statusText: "could not find post"
+            })
+        }
     }
 
 
