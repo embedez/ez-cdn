@@ -1,6 +1,4 @@
-import { Readable } from "stream";
-import { exists, getFile, uploadData } from "../../database/minio";
-import * as fs from "fs";
+import { exists } from "../../database/minio";
 import {imageView} from "./handlers/imageView";
 import {videoView} from "./handlers/videoView";
 import {dataView} from "./handlers/dataView";
@@ -16,7 +14,9 @@ export const view = async (req: Request) => {
 
   // Create a writable stream to handle the response
   let data: any;
-  const contentType = type || req.headers.get('Sec-Fetch-Dest') || req.headers.get('Accept') || req.headers.get("content-type");
+  const contentType = type || req.headers.get('Sec-Fetch-Dest') || req.headers.get('Accept') || req.headers.get("sec-fetch-dest") || req.headers.get("content-type");
+
+  console.log("Content Type: ", contentType)
 
   if ( contentType?.includes('image') ) {
     data = await imageView(id);

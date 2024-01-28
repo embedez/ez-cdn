@@ -1,6 +1,6 @@
 import ffmpeg from 'fluent-ffmpeg';
 import {nanoid} from "nanoid";
-import {replaceData, uploadData} from "../../../../database/minio";
+import {uploadData} from "../../../../database/minio";
 import * as fs from 'fs';
 import {join} from 'path';
 import {videoUpload} from "../../../upload/handlers/videoUploadHandler";
