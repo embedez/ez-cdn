@@ -1,6 +1,8 @@
 # Use an official Node.js runtime as the base image
 FROM oven/bun:1
 
+WORKDIR /app
+
 # Install system dependencies including ffmpeg
 RUN apt-get update && apt-get install -y \
   ffmpeg \
