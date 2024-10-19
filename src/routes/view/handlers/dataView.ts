@@ -1,6 +1,6 @@
-import {exists, getFile} from "../../../database/minio";
+import { getFile } from "../../../database/minio";
 
 export const dataView = async (id: String) => {
-    const idSuffix = '/data'
-    return await getFile(id + idSuffix);
+  const idSuffix = "/data";
+  return await getFile(id + idSuffix);
 };

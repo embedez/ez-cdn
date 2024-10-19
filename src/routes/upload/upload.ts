@@ -2,7 +2,7 @@ import { imageUpload } from "./handlers/imageUpload";
 import { anyUpload } from "./handlers/anyUpload";
 import { validateAuthToken } from "../../utils/validateAuthToken";
 import { videoUploadHandler } from "./handlers/videoUploadHandler";
-import {handleInputFile} from "../../utils/handleInputFile";
+import { handleInputFile } from "../../utils/handleInputFile";
 
 export const upload = async (req: Request) => {
   if (req.method !== "POST")

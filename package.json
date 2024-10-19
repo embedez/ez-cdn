@@ -5,6 +5,6 @@
   },
   "scripts": {
     "start": "bun run src/index.ts",
-    "dev": "bun run src/index.ts"
+    "dev": "bun --hot run src/index.ts"
   }
 }
