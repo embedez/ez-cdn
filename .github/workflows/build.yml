@@ -27,9 +27,30 @@ jobs:
         run: |
           curl -sSL https://nixpacks.com/install.sh | bash
 
+      - name: Create nixpacks.toml
+        run: |
+          cat << EOF > nixpacks.toml
+          [phases.setup]
+          aptPkgs = [
+            "ffmpeg",
+            "build-essential",
+            "gcc",
+            "g++",
+            "make",
+            "python3",
+            "libvips-dev"
+          ]
+
+          [phases.install]
+          cmds = ["npm install --include=optional"]
+
+          [start]
+          cmd = "npm start"
+          EOF
+
       - name: Build with nixpacks
         run: |
-          nixpacks build . --name ez-cdn --apt ffmpeg
+          nixpacks build . --name ez-cdn
 
       - name: Save Docker image
         run: |
@@ -40,7 +61,6 @@ jobs:
         run: |
           docker load -i /tmp/docker-images/ez-cdn.tar
           docker tag ez-cdn ghcr.io/${{ github.repository }}/ez-cdn:${{ env.BRANCH_NAME }}
-
 
       - name: Docker push
         run: |
