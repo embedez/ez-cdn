@@ -18,7 +18,7 @@ export const view = async (req: Request) => {
 
   console.log("Content Type: ", contentType)
 
-  if ( contentType?.includes('image') ) {
+  if ( contentType?.includes('image') || contentType?.includes('photo') ) {
     data = await imageView(id);
   } else if ( contentType?.includes('video') ) {
     data = await videoView(id, req);
