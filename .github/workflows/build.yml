@@ -27,6 +27,7 @@ jobs:
         run: |
           curl -sSL https://nixpacks.com/install.sh | bash
 
+
       - name: Create nixpacks.toml
         run: |
           cat << EOF > nixpacks.toml
@@ -38,14 +39,22 @@ jobs:
             "g++",
             "make",
             "python3",
-            "libvips-dev"
+            "libvips-dev",
+            "curl",
+            "unzip"
           ]
 
           [phases.install]
-          cmds = ["npm install --include=optional"]
+          cmds = [
+            "curl -fsSL https://bun.sh/install | bash",
+            "echo 'export BUN_INSTALL=\"\$HOME/.bun\"' >> \$HOME/.bashrc",
+            "echo 'export PATH=\"\$BUN_INSTALL/bin:\$PATH\"' >> \$HOME/.bashrc",
+            "source \$HOME/.bashrc",
+            "bun install --production"
+          ]
 
           [start]
-          cmd = "npm start"
+          cmd = "bun run src/index.ts"
           EOF
 
       - name: Build with nixpacks
