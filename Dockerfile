@@ -4,14 +4,7 @@ FROM oven/bun:1
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     ffmpeg \
-    build-essential \
-    gcc \
-    g++ \
-    make \
-    python3 \
     libvips-dev \
-    curl \
-    unzip \
     && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory in the container
@@ -21,7 +14,7 @@ WORKDIR /app
 COPY package.json bun.lockb* ./
 
 # Install dependencies
-RUN bun install --production
+RUN bun install
 
 # Copy the rest of the application code
 COPY . .
