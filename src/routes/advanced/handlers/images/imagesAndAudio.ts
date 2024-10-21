@@ -33,18 +33,18 @@ export const imagesAndAudio =  async (req: Request) => {
     // Download the files
     const outputFilePath = join(tempFolder, `${id}-output.mp4`)
     const overlayFilePath = join('./static', 'overlay.png')
-    const imageFilePaths = [];
-    const audioFilePaths = [];
+    const imageFilePaths: string[] = [];
+    const audioFilePaths: string[] = [];
 
 
     for(let audioFile of audioFiles) {
         const audioFilePath = join(tempFolder, nanoid()+'.mp3');
-        fs.writeFileSync(audioFilePath, await audioFile.arrayBuffer());
+        fs.writeFileSync(audioFilePath, Buffer.from(await audioFile.arrayBuffer()));
         audioFilePaths.push(audioFilePath);
     }
     for(let imageFile of imageFiles) {
         const imageFilePath = join(tempFolder, nanoid()+'.png');
-        fs.writeFileSync(imageFilePath, await imageFile.arrayBuffer());
+        fs.writeFileSync(imageFilePath, Buffer.from(await imageFile.arrayBuffer()));
         imageFilePaths.push(imageFilePath);
     }
 
@@ -54,7 +54,7 @@ export const imagesAndAudio =  async (req: Request) => {
 
     const audioInputs = audioFilePaths.flatMap(audioPath => ['-i', audioPath]);
 
-    const filters = []
+    const filters: string[] = []
 
     for(let i = 0; i < imageFilePaths.length; i++) {
         filters.push(`[${i}:v]scale=w=1080:h=1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2:color=black[v${i}]`)

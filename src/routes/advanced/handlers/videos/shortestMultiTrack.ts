@@ -34,9 +34,15 @@ export const shortestMultiTrack = async (req: Request) => {
             }))
         }
 
+        const vid = formData.get('video')
+        const aud = formData.getAll('audio')
+
+        if (!vid) return Response.json({success: false, message: "no video file provided"}, {status: 404})
+        if (aud.length === 0) return Response.json({success: false, message: "no audio files provided"}, {status: 404})
+
         const [videoFile, audioFiles] = await Promise.all([
-            handleInputFile(formData.get('video')),
-            handleInputFiles(formData.getAll('audio'))
+            handleInputFile(vid),
+            handleInputFiles(aud)
         ])
 
 
@@ -53,53 +59,41 @@ export const shortestMultiTrack = async (req: Request) => {
         const videoFilePath = join(tempFolder, nanoid() + '.mp4');
         const outputFilePath = join(tempFolder, `${id}-output.mp4`)
         const overlayFilePath = join('./static', 'overlay.png')
-        const audioFilePaths = [];
+        const audioFilePaths: string[] = [];
 
 
-        fs.writeFileSync(videoFilePath, await videoFile.arrayBuffer())
+        fs.writeFileSync(videoFilePath, Buffer.from(await videoFile.arrayBuffer()))
 
         for (let audioFile of audioFiles) {
             const audioFilePath = join(tempFolder, nanoid() + '.mp3')
-            fs.writeFileSync(audioFilePath, await audioFile.arrayBuffer())
+            fs.writeFileSync(audioFilePath, Buffer.from(await audioFile.arrayBuffer()))
             audioFilePaths.push(audioFilePath)
         }
 
         let ffmpegCommand: string[] = [];
 
 
-        ffmpegCommand.push(//"-loglevel", "debug", // Add the loglevel debug
+        ffmpegCommand.push(
             "-i",
-            videoFilePath,  // Path of the input video file
+            videoFilePath,
             "-i",
-            audioFilePaths[0], // Path of the input audio file
-            "-i",
-            overlayFilePath, // Path of the image file
+            audioFilePaths[0],
             "-metadata",
-            "title=Embed Ez", // Add custom meta title
+            "title=Embed Ez", 
             "-metadata",
-            "tos=Atleast cache download it", // Add custom meta tos
-            "-filter_complex",
-            "[0:v][2:v]overlay=W-w-10:H-h-10[outv]", // Position the image to bottom right
-            "-map",
-            "[outv]", // Map the output from the 'overlay' filter to video stream
-            "-map",
-            "1:a?", // Map the audio stream from the second input file
+            "tos=Atleast cache download it",
+            "-c:v",
+            "copy",
             "-c:a",
-            "aac", // Convert the mapped audio stream to aac
-            "-crf",
-            "28", // Lower the video quality to increase the processing speed
-            "-shortest", // Make the output file duration the same as the shortest input file
-            "-y", // Overwrite output file without asking
+            "copy",
+            "-map",
+            "0:v:0",
+            "-map",
+            "1:a:0",
+            "-shortest",
+            "-y",
+            outputFilePath,
         )
-
-        // Make sure we're using the ultrafast preset for quicker encoding
-        ffmpegCommand.push("-preset");
-        ffmpegCommand.push("ultrafast");
-
-        // Set max FPS to 30
-        ffmpegCommand.push("-r");
-        ffmpegCommand.push("30");
-
 
         // specify output file
         ffmpegCommand.push(outputFilePath)

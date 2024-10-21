@@ -33,12 +33,12 @@ export const imagesAndAudioFluent =  async (req: Request) => {
 
     for(let audioFile of audioFiles) {
         const audioFilePath = join(tempFolder, nanoid()+'.mp3');
-        fs.writeFileSync(audioFilePath, await audioFile.arrayBuffer());
+        fs.writeFileSync(audioFilePath, Buffer.from(await audioFile.arrayBuffer()));
         audioFilePaths.push(audioFilePath);
     }
     for(let imageFile of imageFiles) {
         const imageFilePath = join(tempFolder, nanoid()+'.png');
-        fs.writeFileSync(imageFilePath, await imageFile.arrayBuffer());
+        fs.writeFileSync(imageFilePath, Buffer.from(await imageFile.arrayBuffer()));
         imageFilePaths.push(imageFilePath);
     }
 
