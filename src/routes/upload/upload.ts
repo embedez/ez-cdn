@@ -38,9 +38,10 @@ export const upload = async (req: Request) => {
     );
 
   const contentType =
-    (formData.get("contentType") as undefined | string) ||
-    file.type ||
-    "text/plain; charset=us-ascii";
+  (formData.get("contentType") as undefined | string) ||
+  file.type ||
+  "text/plain; charset=us-ascii";
+
   if (contentType.includes("image/"))
     return imageUpload(formData, req, { contentType });
   if (contentType.includes("video/"))

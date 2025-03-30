@@ -25,7 +25,9 @@ const getClient = (): Client => {
     };
 
     minioClient = new Client(clientOptions);
-
+    
+    console.log(`Connected to Minio at ${clientOptions.endPoint}:${clientOptions.port} (SSL: ${clientOptions.useSSL})`);
+    
     return minioClient;
 }
 
@@ -84,15 +86,13 @@ const uploadData = async (data: Buffer | string, filename: string | string[], me
     if (Array.isArray(filename)) filename = path.join(...filename);
     const client = getClient();
     try {
-        return new Promise((resolve, reject) => {
-            client.putObject(
-                minioBucket,
-                `${filename}`,
-                data,
-                0,
-                metadata,
-            )
-        });
+        return client.putObject(
+          minioBucket,
+          `${filename}`,
+          data,
+          0,
+          metadata,
+      )
     } catch (error) {
         console.log(error);
         return error

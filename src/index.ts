@@ -12,6 +12,8 @@ const server = Bun.serve({
   fetch(request) {
     const url = new URL(request.url);
 
+    console.log('Url Pathname hit:', url.pathname)
+
     if (url.pathname == "/upload") return upload(request);
     if (url.pathname == "/advanced/upload") return advancedUpload(request);
     if (url.pathname == "/view") return view(request);

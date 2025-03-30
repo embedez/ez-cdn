@@ -20,19 +20,19 @@ export async function imageUpload(formData: FormData, req: Request, context: Ima
     return Response.json({
         id: id,
         blurhash: returnedBlurHash,
-        color: rgbToHex(...getBlurHashAverageColor(returnedBlurHash)),
+        color: rgbToHex(...getBlurHashAverageColor(returnedBlurHash || "")),
     })
 }
 
 export async function createUploadData(file: File | ArrayBuffer, id: string, blurhash: string, contentType: string) {
     const fileData = file instanceof File ? await file.arrayBuffer() : file;
-    const uploadDataList = [
+    const uploadDataList: (Promise<any> | any)[] = [
         uploadData(Buffer.from(fileData), id + '/image', {
             'content-type': contentType,
             'blurhash': blurhash,
         })
     ];
-    let generatedHash = null;
+    let generatedHash: string | undefined;
     if (!blurhash) {
         generatedHash = await createAndUploadHash(id, fileData, {
             'content-type': contentType
