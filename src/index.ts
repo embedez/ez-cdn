@@ -15,6 +15,7 @@ const server = Bun.serve({
     if (url.pathname == "/upload") return upload(request);
     if (url.pathname == "/advanced/upload") return advancedUpload(request);
     if (url.pathname == "/view") return view(request);
+    if (url.pathname == "/view.gif") return view(request);
     if (url.pathname == "/view/hash") return hash(request);
 
     return Response.json({ hello: "world" });
