@@ -13,10 +13,23 @@ export const upload = async (req: Request) => {
 
   const formData = await req.formData();
 
+  if (!formData)
+    return Response.json(
+      { success: false, message: "please provide form data" },
+      { status: 400 },
+    );
+
   const authToken = validateAuthToken(req);
   if (authToken instanceof Response) return authToken;
 
-  const file = await handleInputFile(formData.get("file"));
+  const formFile = formData.get("file");
+  
+  if (!formFile)
+    return Response.json(
+      { success: false, message: "please provide a file in Form body" },
+      { status: 400 },
+    );
+  const file = await handleInputFile(formFile);
 
   if (!file)
     return Response.json(

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c977faf3-cdfa-475d-9249-d467d93bf34d" name="Changes" comment="Update nixpacks installation command in build.yml&#10;&#10;The installation command for nixpacks in the GitHub workflows build file has been updated to include ffmpeg. This is needed for introducing video upload functionality, extracting frames from videos and generating blurhashes for images and videos alongside other refactorings and improvements in the code.">
+      <change afterPath="$PROJECT_DIR$/src/routes/presigned/upload.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/presigned/view.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bun.lockb" beforeDir="false" afterPath="$PROJECT_DIR$/bun.lockb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/minio.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/minio.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/advanced/advancedUpload.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/advanced/advancedUpload.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/advanced/handlers/images/imagesAndAudio.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/advanced/handlers/images/imagesAndAudio.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/advanced/handlers/images/imagesAndAudioFluent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/advanced/handlers/images/imagesAndAudioFluent.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/advanced/handlers/videos/longestMultiTrack.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/advanced/handlers/videos/longestMultiTrack.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/advanced/handlers/videos/shortestMultiTrack.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/advanced/handlers/videos/shortestMultiTrack.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/upload/handlers/anyUpload.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/upload/handlers/anyUpload.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/upload/handlers/imageUpload.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/upload/handlers/imageUpload.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/upload/handlers/videoUploadHandler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/upload/handlers/videoUploadHandler.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/upload/upload.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/upload/upload.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/view/handlers/dataView.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/view/handlers/dataView.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/view/handlers/imageView.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/view/handlers/imageView.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/view/handlers/videoView.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/view/handlers/videoView.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/view/hash.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/view/hash.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/view/view.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/view/view.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/createAndUploadHash.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/createAndUploadHash.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/createBlurhash.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/createBlurhash.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/extractBearer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/extractBearer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/extractFrameAndUpload.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/extractFrameAndUpload.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/handleInputFile.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/handleInputFile.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/isKey.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/isKey.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/rgbToHex.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/rgbToHex.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/streamToUint8Array.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/streamToUint8Array.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/validateAuthToken.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/validateAuthToken.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Gratenes&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/embedez/ez-cdn.git&quot;,
+    &quot;accountId&quot;: &quot;81fceab8-75eb-412c-9730-f98cce7b811f&quot;
+  }
+}</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2Zh9Vciy5MlMF2sOMyBwcYmeyQM" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/chanc/OneDrive/Documents/GitHub/ez-cdn/src/routes/presigned",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "prettierjs.PrettierConfiguration.Package": "C:\\Users\\chanc\\AppData\\Roaming\\npm\\node_modules\\prettier",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "C:\\Users\\chanc\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\chanc\OneDrive\Documents\GitHub\ez-cdn\src\routes\presigned" />
+      <recent name="C:\Users\chanc\OneDrive\Documents\GitHub\ez-cdn\src\routes\advanced\handlers\images" />
+      <recent name="C:\Users\chanc\OneDrive\Documents\GitHub\ez-cdn\static" />
+      <recent name="C:\Users\chanc\OneDrive\Documents\GitHub\ez-cdn\src\routes\advanced\handlers" />
+      <recent name="C:\Users\chanc\OneDrive\Documents\GitHub\ez-cdn\src\routes\upload\handlers" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\chanc\OneDrive\Documents\GitHub\ez-cdn\src\routes\advanced\handlers\videos" />
+      <recent name="C:\Users\chanc\OneDrive\Documents\GitHub\ez-cdn\static" />
+      <recent name="C:\Users\chanc\OneDrive\Documents\GitHub\ez-cdn" />
+      <recent name="C:\Users\chanc\OneDrive\Documents\GitHub\ez-cdn\src\routes\upload\handler" />
+      <recent name="C:\Users\chanc\OneDrive\Documents\GitHub\ez-cdn\src\routes\upload" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-WS-241.15989.105" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c977faf3-cdfa-475d-9249-d467d93bf34d" name="Changes" comment="" />
+      <created>1702863468466</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1702863468466</updated>
+      <workItem from="1702863469569" duration="8493000" />
+      <workItem from="1702951718561" duration="17814000" />
+      <workItem from="1703022677215" duration="15071000" />
+      <workItem from="1703102717646" duration="596000" />
+      <workItem from="1703203888024" duration="36000" />
+      <workItem from="1703220686593" duration="5587000" />
+      <workItem from="1703554221875" duration="623000" />
+      <workItem from="1703713492913" duration="596000" />
+      <workItem from="1703910452166" duration="1131000" />
+      <workItem from="1703973311200" duration="14356000" />
+      <workItem from="1704054998947" duration="12928000" />
+      <workItem from="1704143607092" duration="3028000" />
+      <workItem from="1704220399427" duration="2454000" />
+      <workItem from="1704316415148" duration="2322000" />
+      <workItem from="1704485883129" duration="599000" />
+      <workItem from="1704586683465" duration="598000" />
+      <workItem from="1705811659867" duration="3678000" />
+      <workItem from="1705945407853" duration="599000" />
+      <workItem from="1706038767420" duration="599000" />
+      <workItem from="1706126508342" duration="2709000" />
+      <workItem from="1706389001498" duration="599000" />
+      <workItem from="1706484007148" duration="1539000" />
+      <workItem from="1712026941725" duration="23000" />
+      <workItem from="1713890505712" duration="3415000" />
+      <workItem from="1718743077790" duration="106000" />
+    </task>
+    <task id="LOCAL-00001" summary="Update nixpacks installation command in build.yml&#10;&#10;The installation command for nixpacks in the GitHub workflows build file has been updated to include ffmpeg. This is needed for introducing video upload functionality, extracting frames from videos and generating blurhashes for images and videos alongside other refactorings and improvements in the code.">
+      <option name="closed" value="true" />
+      <created>1703049781559</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1703049781559</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="secure with keys" />
+    <MESSAGE value="Refactored upload and view features, added hash generation&#10;&#10;The upload and view routes have been refactored for better readability and maintenance. The upload functionality has been split into specific handlers for different content types. Video frame extraction and blurhash creation functionalities have been incorporated. For the view route, specific handlers for different view types have been created. Also added a script for blurhash generation for all existing files. Several utility functions have been added to assist these tasks.&#10;" />
+    <MESSAGE value="Implemented video upload, hash meta creation and refactored code&#10;&#10;This commit introduces video upload functionality and the ability to extract frames from videos. It also includes the generation of blurhash for images and videos and storing them as metadata. The upload and view routes have been refactored for better readability and separation of concerns. Scripts and utilities to support these features have been also added." />
+    <MESSAGE value="actually ignore temp maybe" />
+    <MESSAGE value="Update nixpacks installation command in build.yml&#10;&#10;The installation command for nixpacks in the GitHub workflows build file has been updated to include ffmpeg. This is needed for introducing video upload functionality, extracting frames from videos and generating blurhashes for images and videos alongside other refactorings and improvements in the code." />
+    <option name="LAST_COMMIT_MESSAGE" value="Update nixpacks installation command in build.yml&#10;&#10;The installation command for nixpacks in the GitHub workflows build file has been updated to include ffmpeg. This is needed for introducing video upload functionality, extracting frames from videos and generating blurhashes for images and videos alongside other refactorings and improvements in the code." />
+  </component>
+</project>

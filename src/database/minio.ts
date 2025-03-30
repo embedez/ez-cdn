@@ -1,4 +1,4 @@
-import {BucketItemStat, Client, ClientOptions, ItemBucketMetadata} from 'minio'
+import {type BucketItemStat, Client, type ClientOptions, type ItemBucketMetadata} from 'minio'
 import axios from 'axios';
 import * as path from "path";
 
@@ -56,7 +56,6 @@ const uploadFile = async (filePath: string, filename: string | string[], metadat
         `${filename}`,
         filePath,
         metadata,
-        (err, etag) => console.log(err, etag)
     )
 }
 
@@ -72,10 +71,6 @@ const uploadFileFromUrl = async (url: string, filename: string | string[], metad
                 `${filename}`,
                 res.data,
                 metadata,
-                (err, etag) => {
-                    if (err) reject(err);
-                    else resolve(etag);
-                }
             )
         });
     } catch (error) {
@@ -96,15 +91,6 @@ const uploadData = async (data: Buffer | string, filename: string | string[], me
                 data,
                 0,
                 metadata,
-                (err, etag) => {
-                    if (err) {
-                        console.log(err)
-                        reject(err);
-                    } else {
-                        console.log('uploaded: ', filename)
-                        resolve(etag);
-                    }
-                }
             )
         });
     } catch (error) {
@@ -113,7 +99,7 @@ const uploadData = async (data: Buffer | string, filename: string | string[], me
     }
 }
 
-const replaceData = async (data: Buffer | string, filename: string | string[], metadata?: ItemBucketMetadata) => {
+const replaceData = async (data: Buffer | string, filename: string, metadata?: ItemBucketMetadata) => {
     if (!status.connected) await connect();
     await deleteObject(filename);
     return uploadData(data, filename, metadata);
